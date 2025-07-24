@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MK Business</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>MK Business</h1>
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#">Produits</a>
+      <a href="#" onclick="toggleCart()">Panier (<span id="cart-count">0</span>)</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Découvrez notre nouvelle collection</h2>
+    <p>Des chaussures tendances à prix imbattables</p>
+  </section>
+
+  <section class="products">
+    <h2>Nos Chaussures</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="./running-shoe-371625.jpg" alt="Chaussure 1">
+        <h3>Chaussure Sport</h3>
+        <p>Prix : 49$</p>
+        <button onclick="addToCart('Chaussure Sport', 49)">Ajouter au panier</button>
+      </div>
+      <div class="product-card">
+        <img src="./oxford-shoes-6078993.jpg" alt="Chaussure 2">
+        <h3>Chaussure Ville</h3>
+        <p>Prix : 59$</p>
+        <button onclick="addToCart('Chaussure Ville', 59)">Ajouter au panier</button>
+      </div>
+      <div class="product-card">
+        <img src="./fashion-1284496.jpg" alt="Chaussure 3">
+        <h3>Chaussures Femmes</h3>
+        <p>Prix : 45$</p>
+        <button onclick="addToCart('Chaussures Femme', 45)">Ajouter au panier</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Panier -->
+  <div id="cart" class="cart-container">
+    <h3>Mon Panier</h3>
+    <ul id="cart-items"></ul>
+    <p>Total : <span id="cart-total">0€</span></p>
+    <button onclick="toggleCart()">Fermer</button>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Boutique Chaussures - Tous droits réservés</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<section class="products">
+  <h2>Nos Chaussures</h2>
+  <div class="product-list">
+
+    <div class="product-card">
+      <img src="./running-shoe-371625.jpg" alt="Chaussure Sport">
+      <h3>Chaussure Sport</h3>
+      <p>Prix : 49$</p>
+      <button onclick="addToCart('Chaussure Sport', 49)">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card">
+      <img src="./oxford-shoes-6078993.jpg" alt="Chaussure Ville">
+      <h3>Chaussure Ville</h3>
+      <p>Prix : 59$</p>
+      <button onclick="addToCart('Chaussure Ville', 59)">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card">
+      <img src="./fashion-1284496.jpg" alt="Chaussures Femmes">
+      <h3>Baskets Femme</h3>
+      <p>Prix : 45€</p>
+      <button onclick="addToCart('Chaussures Femmes', 45)">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card">
+      <img src="./footwear-5408643.jpg" alt="Sneakers Homme">
+      <h3>Sneakers Homme</h3>
+      <p>Prix : 69$</p>
+      <button onclick="addToCart('Sneakers Homme', 69)">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card">
+      <img src="./shoes-1489827.jpg" alt="Sandales pour enfants">
+      <h3>Sandales Été</h3>
+      <p>Prix : 39$</p>
+      <button onclick="addToCart('Sandales pour enfants', 39)">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card">
+      <img src="./walking-boots-3054634.jpg" alt="Bottes Cuir">
+      <h3>Bottes Cuir</h3>
+      <p>Prix : 89$</p>
+      <button onclick="addToCart('Bottes Cuir', 89)">Ajouter au panier</button>
+    </div>
+
+  </div>
+</section>
+<a href="produit1.html" class="voir-produit">Voir le produit</a>
+<div class="product-card">
+  <img src="./running-shoe-371625.jpg" alt="Chaussure Sport">
+  <h3>Chaussure Sport</h3>
+  <p>Prix : 49$</p>
+  <a href="produit1.html" class="voir-produit">Voir le produit</a>
+</div>
+<div class="back-button">
+  <a href="index.html">← Retour à la boutique</a>
+</div>
+<p>Total: <span id="cart-total">0€</span></p>
+<button onclick="closeCart()">Fermer</button>
+<a href="paiement.html"><button>Commander</button></a>
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init("VOTRE_USER_ID"); // remplace par ton vrai ID utilisateur EmailJS
+  })();
+</script>
+<form id="payment-form" onsubmit="return payer(event)">
+  <label>Nom complet :</label>
+  <input type="text" name="user_name" required />
+
+  <label>Email :</label>
+  <input type="email" name="user_email" required />
+
+  <!-- autres champs... -->
+
+  <button type="submit">Payer</button>
+</form>
+<script>
+  function payer(e) {
+    e.preventDefault();
+
+    emailjs.sendForm('VOTRE_SERVICE_ID', 'VOTRE_TEMPLATE_ID', '#payment-form')
+      .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+        document.getElementById('message').textContent = "✅ Paiement confirmé ! Un e-mail vous a été envoyé.";
+        document.getElementById('payment-form').reset();
+      }, function(error) {
+        console.log('FAILED...', error);
+        document.getElementById('message').textContent = "❌ Une erreur est survenue. Réessayez.";
+      });
+  }
+</script>
+<input type="hidden" name="admin_email" value="admin@votresite.com" />
+<input type="hidden" name="date" id="order-date" />
+<script>
+  function chargerPanier() {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    let details = "";
+    let total = 0;
+
+    cart.forEach(item => {
+      details += `- ${item.name} (${item.price}€)\n`;
+      total += item.price;
+    });
+
+    details += `\nTotal : ${total}€`;
+    document.getElementById("commande_details").value = details;
+  }
+
+  // Appelé au chargement
+  window.onload = chargerPanier;
+</script>
+<script>
+  function generateOrderID() {
+    const now = new Date();
+    const timestamp = now.getTime(); // exemple: 1721673923932
+    const random = Math.floor(Math.random() * 1000); // 0-999
+    return `CMD-${timestamp}-${random}`;
+  }
+
+  function chargerPanier() {
+    // Génération du panier + total
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    let details = "";
+    let total = 0;
+
+    cart.forEach(item => {
+      details += `- ${item.name} (${item.price}€)\n`;
+      total += item.price;
+    });
+
+    details += `\nTotal : ${total}€`;
+    document.getElementById("commande_details").value = details;
+
+    // Génération de l’ID de commande
+    document.getElementById("order_id").value = generateOrderID();
+  }
+
+  window.onload = chargerPanier;
+</script>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paiement - Chaussures Store</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Page de Paiement</h1>
+  </header>
+
+  <main class="paiement">
+    <h2>Informations de Paiement</h2>
+    <form id="payment-form" onsubmit="return payer(event)">
+      <label>Nom complet :</label>
+      <input type="text" required />
+
+      <label>Numéro de carte :</label>
+      <input type="text" pattern="\d{16}" placeholder="1234 5678 9012 3456" required />
+
+      <label>Date d'expiration :</label>
+      <input type="month" required />
+
+      <label>CVV :</label>
+      <input type="text" pattern="\d{3}" required />
+
+      <button type="submit">Payer</button>
+    </form>
+
+    <p id="message"></p>
+  </main>
+
+  <script>
+    function payer(event) {
+      event.preventDefault();
+      document.getElementById('message').textContent = "✅ Paiement effectué avec succès ! Merci pour votre achat.";
+      document.getElementById('payment-form').reset();
+    }
+  </script>
+</body>
+</html>
